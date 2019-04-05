@@ -1,0 +1,33 @@
+main: sp1.spmain
+name: sp
+version: 0.1
+author: unknown
+description: Plugin that attempts to simulate physical particles in minecraft.
+depend: [LibsDisguises]
+
+commands:
+  power:
+    description: modifies power based on variable
+    usage: /power
+    permission: spacetime.power
+    permission-message: You don't have the spacetime.power permission.
+  dorealdrops:
+    description: enables realistic item drops
+    usage: /dorealdrops
+    permission: spacetime.dorealdrops
+    permission-message: You don't have the spacetime.dorealdrops permission.
+  dodyntemp:
+    description: enables temperature effects for all mobs
+    usage: /dodyntemp
+    permission: spacetime.dodyntemp
+    permission-message: You don't have the spacetime.dodyntemp permission.
+  ssand:
+    description: summons test falling sand entity
+    usage: /ssand
+    permission: spacetime.ssand
+    permission-message: You don't have the spacetime.ssand permission.
+  water:
+    description: summons test falling sand entity
+    usage: /ssand
+    permission: spacetime.ssand
+    permission-message: You don't have the spacetime.ssand permission.
