@@ -214,7 +214,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		config.addDefault("Enable Enhanced Fires ", true);
 		config.addDefault("Enable Enhanced Explosions ", true);
 		config.addDefault("Enable Ash ", true);
-		config.addDefault("Enable 3d Drops ", false);
+		config.addDefault("Enable 3D Drops ", false);
 		config.addDefault("Enable Netherrack ", false);
 		config.options().copyDefaults(true);
 		saveConfig();
@@ -709,14 +709,14 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		}
 		}
 	}
-	//@EventHandler
-	//public void onMove(PlayerMoveEvent event) {
-	//	if(event.getPlayer().getLocation().getBlock().hasMetadata("T")) {
-	//	if(event.getPlayer().getLocation().getBlock().getMetadata("T").get(0).asInt()>=30) {
-	//		event.getPlayer().damage(1);
-	//	}
-	//	}
-	//}
+	@EventHandler
+	public void onMove(PlayerMoveEvent event) {
+		if(event.getPlayer().getLocation().getBlock().hasMetadata("T")) {
+		if(event.getPlayer().getLocation().getBlock().getMetadata("T").get(0).asInt()>=30) {
+			event.getPlayer().damage(1);
+		}
+		}
+	}
 	
 	public void doGasEffects() {
 		for(gasManager gm : gsM) {
@@ -1028,7 +1028,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 				if(key>eRange-eRange/5) {
 					if(config.getBoolean("Enable Block Physics ")) {
 					if(randor.nextInt(2)==0 && bls.getType()!=Material.AIR) {
-						//FallingBlock fb = bls.getWorld().spawnFallingBlock(bls.getLocation(), bls.getState().getData());
+						FallingBlock fb = bls.getWorld().spawnFallingBlock(bls.getLocation(), bls.getState().getData());
 						Entity fb = spawnRealFSand(bls.getLocation(), bls.getTypeId(), bls.getData());
 						fb.setVelocity(begin.toVector().subtract(fb.getLocation().toVector()).normalize().multiply(1.2));
 						bls.setType(Material.AIR);
@@ -1066,7 +1066,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		}
 	}
 	
-	/*public int checkRadius() {
+	public int checkRadius() {
 		if(radius>120) {
 			return radius*2;
 		}
@@ -1082,9 +1082,9 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		else {
 			return radius*radius*radius;
 		}
-	}*/
+	}
 	
-	/*public void deleteBlocks(final HashMap<Integer, List<Block>> blocks) {
+	public void deleteBlocks(final HashMap<Integer, List<Block>> blocks) {
 		console.sendMessage("" + blocks.size());
 		int counterAdd = 0;
 		int counterr = 0;
@@ -1103,9 +1103,9 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 				counterr2+=5;
 			}
 		}
-	}*/
+	}
 	
-	/*public void doBlockCount(int countLeft, HashMap<Integer, List<Block>> blocks, Location loc) {
+	public void doBlockCount(int countLeft, HashMap<Integer, List<Block>> blocks, Location loc) {
 		if(countLeft<=0) {
 			deleteBlocks(blocks);
 			return;
@@ -1141,7 +1141,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 			Bukkit.getScheduler().runTaskLater(this,
 					() -> doBlockCount(countLeft-10000, blocks, loc), 18);
 		}
-	}*/
+	}
 	
 	@EventHandler
 	public void onInteract2(PlayerInteractEvent event) {
@@ -1399,7 +1399,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		int fullRadi = radiuse*radiuse*radiuse;
 		if(fullRadi>6000) {
 		for(int i = 0; i < radiuse*radiuse*radiuse; i++) {
-			//final BlockIterator bit = new BlockIterator(wor, loc.toVector(), new Vector(randor.nextInt(360)+1,randor.nextInt(360)+1,randor.nextInt(360)+1), 0, radius);
+			final BlockIterator bit = new BlockIterator(wor, loc.toVector(), new Vector(randor.nextInt(360)+1,randor.nextInt(360)+1,randor.nextInt(360)+1), 0, radius);
 			final BlockIterator bit = new BlockIterator(wor, loc.toVector(), new Vector(0.0D + Math.random() - Math.random(),0.0D + Math.random() - Math.random(),0.0D + Math.random() - Math.random()), 0, radiuse);
 			int blockNum = 1;
 			while (bit.hasNext()) {
@@ -1432,14 +1432,14 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		}
 	}
 	
-	/*@EventHandler
+	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		if(event.getAction()==Action.RIGHT_CLICK_BLOCK) {
 		Location loc = event.getClickedBlock().getLocation();
 		HashMap<Integer, List<Block>> blocks = new HashMap<Integer, List<Block>>();
 		//block range getter
 		for(int i = 0; i < radius*radius*radius; i++) {
-			//final BlockIterator bit = new BlockIterator(wor, loc.toVector(), new Vector(randor.nextInt(360)+1,randor.nextInt(360)+1,randor.nextInt(360)+1), 0, radius);
+			final BlockIterator bit = new BlockIterator(wor, loc.toVector(), new Vector(randor.nextInt(360)+1,randor.nextInt(360)+1,randor.nextInt(360)+1), 0, radius);
 			final BlockIterator bit = new BlockIterator(wor, loc.toVector(), new Vector(0.0D + Math.random() - Math.random(),0.0D + Math.random() - Math.random(),0.0D + Math.random() - Math.random()), 0, radius);
 			int blockNum = 1;
 			while (bit.hasNext()) {
@@ -1474,8 +1474,8 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		}
 		
 	}
-	}*/
-	/*int cx = loc.getBlockX();
+	}
+	int cx = loc.getBlockX();
 	int cy = loc.getBlockY();
 	int cz = loc.getBlockZ();
 	for (int x = cx - radius; x <= cx + radius; x++) {
@@ -1498,7 +1498,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 				}
 			}
 		}
-	}*/
+	}
 	public void throwExplosion(Location locer, int eRange, HashMap<Integer, List<Block>> blocks) {
 		locer.getWorld().playSound(locer, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 		for(int key : blocks.keySet()) {
@@ -1510,7 +1510,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 			}
 			else {
 				doBlockStuff(blocks.get(key), key, eRange, locer);
-			/*for(Block bls : blocks.get(key)) {
+			for(Block bls : blocks.get(key)) {
 				if(randor.nextInt(8)==0) {
 					locer.getWorld().playSound(bls.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 				}
@@ -1520,7 +1520,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 					iterate(empty, bls.getLocation(), (int) (.25*16), (int) ((.25*16)*(.25*16)*(.25*16)));
 				}
 				bls.setType(Material.AIR);
-			}*/
+			}
 			}
 		}
 	}
@@ -1822,8 +1822,8 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 	//water shite
 	
 	public void doWaterCommand(Player p, String a) {
-		//p.getLocation().getBlock().setType(Material.WATER);
-		//p.getLocation().getBlock().setData(Byte.parseByte(a));
+		p.getLocation().getBlock().setType(Material.WATER);
+		p.getLocation().getBlock().setData(Byte.parseByte(a));
 		doWaterPhysics = !doWaterPhysics;
 	}
 	
@@ -1831,7 +1831,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 	public void waterspread(BlockFromToEvent e) {
 		if(doWaterPhysics == true) {
 			if(e.getBlock().getType()==Material.STATIONARY_WATER||e.getBlock().getType()==Material.WATER) {
-				/*if(e.getBlock().getType()==Material.STATIONARY_WATER) {
+				if(e.getBlock().getType()==Material.STATIONARY_WATER) {
 					e.getBlock().setType(Material.WATER);
 					e.getBlock().setData((byte) 1);
 					e.getToBlock().setType(Material.WATER);
@@ -1841,7 +1841,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 				if(e.getBlock().getData()!=7) {
 					e.getToBlock().setType(Material.WATER);
 					e.getToBlock().setData((byte) 7);
-				}}*/
+				}}
 				e.getBlock().setType(Material.AIR);
 				e.getToBlock().setType(Material.AIR);
 				gsM.get(2).addGasLocation(e.getBlock().getLocation(), 1);
@@ -1850,7 +1850,7 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		}
 	}
 	
-	/*public boolean testGravity(Location l) {
+	public boolean testGravity(Location l) {
 		boolean isSafe = true;
 		boolean isup = false;
 		int lengthSafety = 4;
@@ -1944,6 +1944,6 @@ public class spmain extends JavaPlugin implements Listener, CommandExecutor{
 		}
 		}
 		return isSafe;
-	}*/
+	}
 	
 }
